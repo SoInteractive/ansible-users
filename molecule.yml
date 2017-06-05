@@ -1,0 +1,16 @@
+---
+ansible:
+  playbook: tests/playbook.yml
+driver:
+  name: docker
+verifier:
+  name: testinfra
+docker:
+  containers:
+    - name: users-xenial
+      image: ubuntu
+      image_version: xenial
+    - name: users-centos
+      image: centos/systemd
+      image_version: latest
+      privileged: true

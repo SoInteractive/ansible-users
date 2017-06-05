@@ -1,0 +1,19 @@
+#!/bin/bash
+# {{ ansible_managed }}
+{# usable shell variables:
+  PAM_RHOST
+  PAM_SERVICE
+  PAM_TTY
+  PAM_TYPE
+  PAM_USER
+#}
+
+{% if users_login_notify_exclude != [] %}
+EXCLUDES="{{ users_login_notify_exclude | join (' ') }}"
+[[ $EXCLUDES =~ (^|[[:space:]])$PAM_RHOST($|[[:space:]]) ]] && exit 0 
+{% endif %}
+
+if [ "$PAM_TYPE" != "close_session" ]; then
+  MESSAGE="Someone logged from $PAM_RHOST into `hostname` on {{ users_environment }}{% endif %}"
+  curl -X POST --data-urlencode "payload={\"channel\": \"#logins\", \"username\": \"Login Notify\", \"text\": \"$MESSAGE\", \"icon_emoji\": \":warning:\"}" "{{ users_slack_webhook }}" &>/dev/null
+fi

@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Pawel Krupa
+  description: Manage users, passwords, and ssh keys
+  company: Sointeractive
+  license: MIT
+  min_ansible_version: 1.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+  - name: EL
+    versions:
+    - 7
+  galaxy_tags:
+  - user
+  - ssh
+
+dependencies: []

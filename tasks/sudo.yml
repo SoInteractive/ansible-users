@@ -1,0 +1,32 @@
+---
+#- set_fact:
+#    lectures_count: # do some clever counting of available lecture configurations
+#
+#- name: Create SUDO lecture
+#  copy:
+#    src: "lectures/{{ lectures_count | random }}.conf"
+#    dest: /usr/local/share/sudoers.lecture
+
+- name: Create SUDO lecture
+  copy:
+    src: "lectures/1.conf"
+    dest: /usr/local/share/sudoers.lecture
+  when: not users_passwordless
+
+- name: Modify sudoers file
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^Defaults.*lecture = always', line: 'Defaults lecture = always' }
+    - { regexp: '^Defaults.*lecture_file = .*$', line: 'Defaults lecture_file = /usr/local/share/sudoers.lecture' }
+  when: not users_passwordless
+
+- name: "Add user to {{ users_admin_group }} to enable passwordless sudo"
+  user:
+    name: "{{ users_id }}"
+    groups: "{{ users_admin_group }}"
+    append: yes
+  when: users_passwordless

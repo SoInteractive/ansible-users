@@ -1,0 +1,24 @@
+---
+- name: Gather variables for each operating system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+  tags:
+    - always
+
+#- name: "Set password for user {{ users_id }}"
+#  user:
+#    name: "{{ users_id }}"
+#    password: "{{ users_password }}"
+#    update_password: yes
+#  when: not users_passwordless
+
+- include: sudo.yml
+- include: ssh_client.yml
+
+- include: notifications.yml
+  when: users_slack_webhook != "" and users_login_notify

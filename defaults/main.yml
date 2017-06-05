@@ -1,0 +1,23 @@
+---
+users_id: "{{ ansible_user_id }}"
+
+users_admins:
+  - rdziadusz
+  - pkrupa
+  - bkorpala
+  - tgrzesik
+  - rdemachkovych
+
+users_additional: []
+
+users_unauthorize: []
+
+users_exclusive_ssh_keys: false
+
+users_passwordless: yes
+
+users_environment: "{{ ansible_fqdn }}"
+users_slack_webhook: "http://example.com"
+users_login_notify: false
+# don't notify on logins from those hosts/IPs
+users_login_notify_exclude: []

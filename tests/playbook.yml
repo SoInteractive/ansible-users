@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - users
+  vars:
+    users_slack_webhook: "https://example.com"
+    users_login_notify: true

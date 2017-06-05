@@ -1,0 +1,42 @@
+---
+- name: Assemble keys
+  set_fact:
+    key_item: "{{ lookup('file', 'keys/' + item).split('\n') }}"
+  with_flattened:
+    - "{{ users_admins }}"
+    - "{{ users_additional }}"
+  register: keys
+
+- name: "Copy ssh keys to user {{ users_id }}"
+  authorized_key:
+    key: "{{ keys.results|selectattr('ansible_facts','defined')|map(attribute='ansible_facts.key_item')|map('join', '\n')|join('\n') }}"
+    state: present
+    user: "{{ users_id }}"
+    exclusive: "{{ users_exclusive_ssh_keys }}"
+
+# This won't work with "exclusive" option
+#- name: "Copy ssh keys to user {{ users_id }}"
+#  authorized_key:
+#    user: "{{ users_id }}"
+#    state: present
+#    key: "{{ lookup('file', 'keys/' + item ) }}"
+#    exclusive: "{{ users_exclusive_ssh_keys }}"
+#  with_flattened:
+#    - "{{ users_admins }}"
+#    - "{{ users_additional }}"
+
+- name: Unauthorize access for keys from insecure_keys directory
+  authorized_key:
+    user: "{{ users_id }}"
+    key: "{{ lookup('file', item ) }}"
+    state: absent
+  with_fileglob:
+    - insecure_keys/*
+
+- name: Unauthorize specific users
+  authorized_key:
+    user: "{{ users_id }}"
+    key: "{{ lookup('file', 'keys/' + item ) }}"
+    state: absent
+  with_items: "{{ users_unauthorize }}"
+  when: users_unauthorize != []

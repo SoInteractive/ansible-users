@@ -1,0 +1,24 @@
+---
+- name: Set slack notification
+  template:
+    src: slack.sh.j2
+    dest: /opt/slack.sh
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Enable slack notification
+  lineinfile:
+    dest: /etc/pam.d/sshd
+    regexp: "^.*/opt/slack.sh$"
+    line: "session optional pam_exec.so seteuid /opt/slack.sh"
+    state: present
+    create: yes
+
+- name: Show failed logins on SSH
+  lineinfile:
+    dest: "/etc/pam.d/sshd"
+    backup: yes
+    regexp: "^session(.*)pam_lastlog.so(.*)$"
+    line: "session required pam_lastlog.so showfailed"
+    state: present
