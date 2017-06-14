@@ -15,5 +15,5 @@ EXCLUDES="{{ users_login_notify_exclude | join (' ') }}"
 
 if [ "$PAM_TYPE" != "close_session" ]; then
   MESSAGE="Someone logged from $PAM_RHOST into `hostname` on {{ users_environment }}"
-  curl -X POST --data-urlencode "payload={\"channel\": \"#logins\", \"username\": \"Login Notify\", \"text\": \"$MESSAGE\", \"icon_emoji\": \":warning:\"}" "{{ users_slack_webhook }}" &>/dev/null
+  curl -X POST --data-urlencode "payload={\"username\": \"Login Notify\", \"text\": \"$MESSAGE\", \"icon_url\": \"https://cdn2.iconfinder.com/data/icons/snipicons/500/login-512.png\"}" "{{ users_slack_webhook }}" &>/dev/null
 fi
