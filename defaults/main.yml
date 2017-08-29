@@ -1,5 +1,5 @@
 ---
-users_id: "{{ ansible_user_id }}"
+users_id: "{{ ansible_env['SUDO_USER'] | default(ansible_user_id) }}"
 
 users_admins:
   - rdziadusz
