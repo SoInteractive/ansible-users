@@ -1,7 +1,7 @@
 ---
 - hosts: all
   roles:
-    - users
+    - ansible-users
   vars:
     users_slack_webhook: "https://example.com"
     users_login_notify: true

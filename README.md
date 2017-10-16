@@ -3,7 +3,7 @@
 Ansible Role: users
 ===================
 
-[![Build Status](https://ci.devops.sosoftware.pl/buildStatus/icon?job=SoInteractive/users/master)](https://ci.devops.sosoftware.pl/blue/organizations/jenkins/SoInteractive%2Fusers/activity) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/ansible/role/18237.svg)](https://galaxy.ansible.com/SoInteractive/users/) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
+[![Build Status](https://travis-ci.org/SoInteractive/ansible-users.svg?branch=master)](https://travis-ci.org/SoInteractive/ansible-users) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/badge/ansible%20role-SoInteractive.users-blue.svg)](https://galaxy.ansible.com/SoInteractive/users/) [![GitHub tag](https://img.shields.io/github/tag/sointeractive/ansible-users.svg)](https://github.com/SoInteractive/ansible-users/tags) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
 
 Manage users, passwords, and ssh public keys
 
