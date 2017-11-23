@@ -7,6 +7,7 @@ users_admins:
   - bkorpala
   - tgrzesik
   - rdemachkovych
+  - jkrol
   - awx
 
 users_additional: []
