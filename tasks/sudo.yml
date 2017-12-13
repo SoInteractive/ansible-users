@@ -24,9 +24,9 @@
     - { regexp: '^Defaults.*lecture_file = .*$', line: 'Defaults lecture_file = /usr/local/share/sudoers.lecture' }
   when: not users_passwordless
 
-- name: "Add user to {{ users_admin_group }} to enable passwordless sudo"
+- name: "Add admin user to {{ users_admin_group }} group to enable passwordless sudo"
   user:
-    name: "{{ users_id }}"
+    name: "{{ users_admin_id }}"
     groups: "{{ users_admin_group }}"
     append: yes
   when: users_passwordless

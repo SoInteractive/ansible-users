@@ -5,3 +5,7 @@
   vars:
     users_slack_webhook: "https://example.com"
     users_login_notify: true
+    users_additional:
+      - { name: 'knajder', groups: 'adm', ssh_key: True }
+      - { name: 'awx', groups: 'adm' }
+      - { name: 'tgrzesik' }

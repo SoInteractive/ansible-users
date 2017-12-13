@@ -3,18 +3,18 @@ from testinfra.utils.ansible_runner import AnsibleRunner
 testinfra_hosts = AnsibleRunner('.molecule/ansible_inventory').get_hosts('all')
 
 
-def test_directories(File):
+def test_directories(host):
     present = [
         "/root/.ssh"
     ]
     if present:
         for directory in present:
-            d = File(directory)
+            d = host.file(directory)
             assert d.is_directory
             assert d.exists
 
 
-def test_files(File):
+def test_files(host):
     present = [
         "/opt/slack.sh",
         "/root/.ssh/authorized_keys",
@@ -22,6 +22,6 @@ def test_files(File):
     ]
     if present:
         for file in present:
-            f = File(file)
+            f = host.file(file)
             assert f.exists
             assert f.is_file

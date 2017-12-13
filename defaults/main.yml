@@ -1,25 +1,19 @@
 ---
-users_id: "{{ ansible_env['SUDO_USER'] | default(ansible_user_id) }}"
+users_admin_id: "{{ ansible_env['SUDO_USER'] | default(ansible_user_id) }}"
+# By default this role will also take specified keys from vars/main.yml
+users_admin_keys: []
 
-users_admins:
-  - rdziadusz
-  - pkrupa
-  - bkorpala
-  - tgrzesik
-  - rdemachkovych
-  - jkrol
-  - awx
-
+users_unauthorized: []
 users_additional: []
-
-users_unauthorize: []
+#users_additional:
+#- { name: ubuntu, groups: sudo, ssh_key: True }
 
 users_exclusive_ssh_keys: false
-
 users_passwordless: yes
 
 users_environment: "{{ ansible_fqdn }}"
-users_slack_webhook: "http://example.com"
+users_slack_webhook: ""
+#users_slack_webhook: "http://example.com"
 users_login_notify: false
 # don't notify on logins from those hosts/IPs
 users_login_notify_exclude: []

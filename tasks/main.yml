@@ -17,8 +17,10 @@
 #    update_password: yes
 #  when: not users_passwordless
 
+- include: preflight.yml
 - include: sudo.yml
-- include: ssh_client.yml
+- include: admin.yml
+- include: create.yml
 
 - include: notifications.yml
   when: users_slack_webhook != "" and users_login_notify

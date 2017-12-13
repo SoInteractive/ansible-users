@@ -1,0 +1,31 @@
+---
+- name: Assemble keys
+  set_fact:
+    key_item: "{{ lookup('file', 'keys/' + item).split('\n') }}"
+  with_flattened:
+    - "{{ users_admin_keys_default }}"
+    - "{{ users_admin_keys }}"
+  register: keys
+
+- name: "Copy ssh keys to user {{ users_admin_id }}"
+  authorized_key:
+    key: "{{ keys.results|selectattr('ansible_facts','defined')|map(attribute='ansible_facts.key_item')|map('join', '\n')|join('\n') }}"
+    state: present
+    user: "{{ users_admin_id }}"
+    exclusive: "{{ users_exclusive_ssh_keys }}"
+
+- name: Unauthorize access for keys from insecure_keys directory
+  authorized_key:
+    user: "{{ users_admin_id }}"
+    key: "{{ lookup('file', item ) }}"
+    state: absent
+  with_fileglob:
+    - insecure_keys/*
+
+- name: Unauthorize specific admin keys
+  authorized_key:
+    user: "{{ users_admin_id }}"
+    key: "{{ lookup('file', 'keys/' + item ) }}"
+    state: absent
+  with_items: "{{ users_unauthorized }}"
+  when: users_unauthorized != []
