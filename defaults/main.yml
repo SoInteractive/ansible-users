@@ -7,6 +7,8 @@ users_unauthorized: []
 users_additional: []
 #users_additional:
 #- { name: ubuntu, groups: sudo, ssh_key: True }
+#- { name: ubuntu, groups: sudo }
+#- { name: ubuntu }
 
 users_exclusive_ssh_keys: false
 users_passwordless: yes
