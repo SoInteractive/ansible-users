@@ -1,0 +1,6 @@
+- name: Check webhook address
+  fail:
+    msg: "Please specify slack-compatible webhook address"
+  when:
+  - users_login_notify
+  - users_slack_webhook == ""

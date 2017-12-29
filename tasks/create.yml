@@ -1,0 +1,37 @@
+---
+- name: Install needed packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ users_dependencies }}"
+
+- name: Add user groups
+  group:
+    name: "{{ item.name }}"
+    state: present
+  with_items: "{{ users_additional }}"
+
+- name: Add users
+  user:
+    name: "{{ item.name }}"
+    group: "{{ item.name }}"
+    shell: /bin/bash
+    groups: "{{ item.groups | default(omit) }}"
+    append: yes
+    generate_ssh_key: "{{ item.ssh_key | default(False) }}"
+    ssh_key_bits: 2048
+    ssh_key_comment: "{{ item.name }}@sointeractive.pl"
+  with_items: "{{ users_additional }}"
+
+- name: Copy ssh keys to additional users
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ lookup('file', 'keys/' + item.name ) }}"
+  with_items: "{{ users_additional }}"
+
+- name: Remove unauthorized users
+  user:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ users_unauthorized }}"
