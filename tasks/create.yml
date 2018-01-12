@@ -11,6 +11,12 @@
     state: present
   with_items: "{{ users_additional }}"
 
+- name: Add additional user groups
+  group:
+    name: "{{ item.groups }}"
+    state: present
+  with_items: "{{ users_additional }}"
+
 - name: Add users
   user:
     name: "{{ item.name }}"
