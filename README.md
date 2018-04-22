@@ -7,6 +7,11 @@ Ansible Role: users
 
 Manage users, passwords, and ssh public keys
 
+:warning: IMPORTANT NOTICE
+--------------------------
+
+This project is for internal use. We do not accept Pull Requests and/or new issues.
+
 Overview
 --------
 
